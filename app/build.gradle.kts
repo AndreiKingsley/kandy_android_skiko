@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.Packaging
 import com.android.build.gradle.tasks.MergeSourceSetFolders
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
@@ -78,6 +79,14 @@ android {
     }
     packaging {
         resources {
+            pickFirsts += listOf(
+                "META-INF/AL2.0",
+                "META-INF/LGPL2.1",
+                "META-INF/ASL-2.0.txt",
+                "META-INF/LICENSE.md",
+                "META-INF/NOTICE.md",
+                "META-INF/LGPL-3.0.txt",
+            )
             excludes += listOf(
                 "META-INF/kotlin-jupyter-libraries/libraries.json",
                 "META-INF/{INDEX.LIST,DEPENDENCIES}",
@@ -88,7 +97,10 @@ android {
                 "META-INF/ASL-2.0.txt",
                 "META-INF/LICENSE.md",
                 "META-INF/NOTICE.md",
-                "META-INF/LGPL-3.0.txt"
+                "META-INF/LGPL-3.0.txt",
+                "META-INF/LICENSE-EDL-1.0.txt",
+                "LICENSE-EDL-1.0.txt",
+                "*/LICENSE-EDL-1.0.txt"
             )
         }
     }
@@ -113,20 +125,28 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
 
-    implementation("org.jetbrains.skiko:skiko-android:0.7.89")
+    implementation("org.jetbrains.skiko:skiko-android:0.7.92")
 
-    skikoNativeX64("org.jetbrains.skiko:skiko-android-runtime-x64:0.7.89")
-    skikoNativeArm64("org.jetbrains.skiko:skiko-android-runtime-arm64:0.7.89")
+    skikoNativeX64("org.jetbrains.skiko:skiko-android-runtime-x64:0.7.92")
+    skikoNativeArm64("org.jetbrains.skiko:skiko-android-runtime-arm64:0.7.92")
 
-    implementation("org.jetbrains.lets-plot:lets-plot-kotlin-kernel:4.4.3")
+    implementation("org.jetbrains.lets-plot:lets-plot-kotlin-kernel:4.6.0")
 
-    implementation("org.jetbrains.lets-plot:lets-plot-common:4.1.0")
+    implementation("org.jetbrains.lets-plot:lets-plot-common:4.3.0")
 
-    implementation("org.jetbrains.lets-plot:lets-plot-compose:1.0.2")
+    implementation("org.jetbrains.lets-plot:lets-plot-compose:1.0.3")
 
-    implementation("org.jetbrains.kotlinx:kandy-lets-plot:0.5.0") {
+    implementation("org.jetbrains.kotlinx:kandy-lets-plot:0.6.0") {
         exclude(group = "commons-logging", module = "commons-logging")
         exclude(group = "org.jetbrains.lets-plot", module = "lets-plot-kotlin-jvm")
+        exclude(group = "io.swagger", module= "swagger-parser-safe-url-resolver")
+        exclude(group = "org.eclipse.collections", module = "eclipse-collections")
+    }
+    implementation("org.jetbrains.kotlinx:kotlin-statistics-jvm:0.2.1") {
+        exclude(group = "commons-logging", module = "commons-logging")
+        exclude(group = "org.jetbrains.lets-plot", module = "lets-plot-kotlin-jvm")
+        exclude(group = "io.swagger", module= "swagger-parser-safe-url-resolver")
+        exclude(group = "org.eclipse.collections", module = "eclipse-collections")
     }
 }
 
